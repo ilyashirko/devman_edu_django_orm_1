@@ -7,32 +7,33 @@ from datacenter.storage_information_view import format_duration, get_duration
 
 TZ_MSK = timezone(timedelta(hours=3))
 
+
 def passcard_info_view(request, passcode, alarm_time = 3600):
-    passcard = Passcard.objects.get(passcode=passcode)
+    selected_passcard = Passcard.objects.get(passcode=passcode)
 
-    this_passcard_visits = []
-    for visit in Visit.objects.filter(passcard=passcard):
+    selected_passcard_visits = []
+
+    for visit in Visit.objects.filter(passcard=selected_passcard):
         entered_at = visit.entered_at
-        try:
-            how_long_inside = visit.leaved_at - entered_at
-        except TypeError:
-            how_long_inside = get_duration(visit)
-        finally:
-            is_strange = False
-            if how_long_inside.total_seconds() >= alarm_time:
-                is_strange = True
-            
-            this_passcard_visits.append(
-                {
-                    'entered_at': entered_at,
-                    'duration': format_duration(how_long_inside),
-                    'is_strange': is_strange
-                }
-            )
 
+        if visit.leaved_at:
+            how_long_inside = visit.leaved_at - entered_at
+        else:
+            how_long_inside = get_duration(visit)
+        
+        is_strange = how_long_inside.total_seconds() >= alarm_time
+        
+        selected_passcard_visits.append(
+            {
+                'entered_at': entered_at,
+                'duration': format_duration(how_long_inside),
+                'is_strange': is_strange
+            }
+        )
     
     context = {
-        'passcard': passcard,
-        'this_passcard_visits': this_passcard_visits
+        'passcard': selected_passcard,
+        'this_passcard_visits': selected_passcard_visits
     }
+
     return render(request, 'passcard_info.html', context)
