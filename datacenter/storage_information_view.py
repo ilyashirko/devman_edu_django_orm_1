@@ -8,11 +8,14 @@ from datacenter.models import Visit
 TZ_MSK = timezone(timedelta(hours=3))
 
 
-def get_duration(visit):
-    entered_at = localtime(visit.entered_at, timezone=TZ_MSK)
-    duration = localtime(timezone=TZ_MSK).replace(microsecond=0) - entered_at
-    return duration
+def change_timezone(time, timezone=TZ_MSK):
+    return localtime(time, timezone=timezone)
+     
 
+def get_duration(visit):
+    return (localtime(timezone=TZ_MSK).replace(microsecond=0) - 
+            change_timezone(visit.entered_at))
+    
 
 def format_duration(duration):
     duration = int(duration.total_seconds())
@@ -27,14 +30,16 @@ def format_duration(duration):
 def storage_information_view(request):
     still_there = Visit.objects.filter(leaved_at=None)
     non_closed_visits = []
+
     for person in still_there:
         non_closed_visits.append({
             'who_entered': person.passcard.owner_name,
-            'entered_at': localtime(person.entered_at, timezone=TZ_MSK),
+            'entered_at': change_timezone(person.entered_at),
             'duration': format_duration(get_duration(person)),
         })
     
     context = {
-        'non_closed_visits': non_closed_visits,  # не закрытые посещения
+        'non_closed_visits': non_closed_visits,
     }
+
     return render(request, 'storage_information.html', context)
