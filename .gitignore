@@ -1,0 +1,4 @@
+datacenter/__pycache__
+env
+project/__pycache__
+datacenter/migrations/__pycache__
