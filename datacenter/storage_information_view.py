@@ -6,15 +6,14 @@ from django.utils.timezone import localtime
 from datacenter.models import Visit
 
 TZ_MSK = timezone(timedelta(hours=3))
-
-
-def change_timezone(time, timezone=TZ_MSK):
-    return localtime(time, timezone=timezone)
      
 
 def get_duration(visit):
-    return (localtime(timezone=TZ_MSK).replace(microsecond=0) - 
-            change_timezone(visit.entered_at))
+    if visit.leaved_at:
+        return visit.leaved_at - visit.entered_at
+    else:
+        return (localtime(timezone=TZ_MSK).replace(microsecond=0) - 
+                localtime(visit.entered_at, timezone=TZ_MSK))
     
 
 def format_duration(duration):
@@ -34,7 +33,7 @@ def storage_information_view(request):
     for person in still_there:
         non_closed_visits.append({
             'who_entered': person.passcard.owner_name,
-            'entered_at': change_timezone(person.entered_at),
+            'entered_at': localtime(person.entered_at, timezone=TZ_MSK),
             'duration': format_duration(get_duration(person)),
         })
     
