@@ -14,18 +14,14 @@ def passcard_info_view(request, passcode, alarm_time = 3600):
     selected_passcard_visits = []
 
     for visit in Visit.objects.filter(passcard=selected_passcard):
-        entered_at = visit.entered_at
-
-        if visit.leaved_at:
-            how_long_inside = visit.leaved_at - entered_at
-        else:
-            how_long_inside = get_duration(visit)
+        
+        how_long_inside = get_duration(visit)
         
         is_strange = how_long_inside.total_seconds() >= alarm_time
         
         selected_passcard_visits.append(
             {
-                'entered_at': entered_at,
+                'entered_at': visit.entered_at,
                 'duration': format_duration(how_long_inside),
                 'is_strange': is_strange
             }
