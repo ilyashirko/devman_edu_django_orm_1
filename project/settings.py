@@ -1,13 +1,18 @@
 import os
 
+from environs import Env
+
+env = Env()
+env.read_env()
+ 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': 'checkpoint.devman.org',
-        'PORT': '5434',
-        'NAME': 'checkpoint',
-        'USER': 'guard',
-        'PASSWORD': 'osim5',
+        'ENGINE': os.getenv('DEFAULT_DATABASE_ENGINE'),
+        'HOST': os.getenv('DEFAULT_DATABASE_HOST'),
+        'PORT': os.getenv('DEFAULT_DATABASE_PORT'),
+        'NAME': os.getenv('DEFAULT_DATABASE_NAME'),
+        'USER': os.getenv('DEFAULT_DATABASE_USER'),
+        'PASSWORD': os.getenv('DEFAULT_DATABASE_PASSWORD'),
     }
 }
 
@@ -15,7 +20,7 @@ INSTALLED_APPS = ['datacenter']
 
 SECRET_KEY = 'REPLACE_ME'
 
-DEBUG = True
+DEBUG = env.bool('DEBUG')
 
 ROOT_URLCONF = 'project.urls'
 

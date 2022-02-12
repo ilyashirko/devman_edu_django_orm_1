@@ -5,3 +5,5 @@ datacenter/migrations/__pycache__
 .replit
 poetry.lock
 pyproject.toml
+.env
+.env copy
