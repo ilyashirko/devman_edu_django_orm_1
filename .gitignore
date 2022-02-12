@@ -6,4 +6,3 @@ datacenter/migrations/__pycache__
 poetry.lock
 pyproject.toml
 .env
-.env copy
