@@ -18,7 +18,7 @@ create `.env` file and input there your database parameters and debug-mode statu
 export DEBUG=False
 export DATABASE_URL=ENGINE://USER:PASSWORD@HOST:PORT/NAME (for postgresql)
 export SECRET_KEY=YOUR_SECRET_KEY
-export ALLOWED_HOSTS=['host1', 'host2'...]
+export ALLOWED_HOSTS='host1', 'host2'...
 ```
 
 Then you can start local server from root directory via:  
