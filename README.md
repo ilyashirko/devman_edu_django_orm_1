@@ -5,7 +5,7 @@ Site created by [DEVMAN](https://dvmn.org)
 Site was made for the security officers to control security access cards of company employees which visit secret storage.  
 
 ## How to run
-For local running you should clone repo, get in root directory, ectivate virtualenv and install requirements.txt via pip or pip3:  
+For local running you should clone repo, get in root directory, activate virtualenv and install requirements.txt via pip or pip3:  
 ```
 $ git clone https://github.com/ilyashirko/django-orm-watching-storage
 $ cd django-orm-watching-storage
