@@ -1,5 +1,5 @@
 Site created by [DEVMAN](https://dvmn.org)  
-```active_passcards_view```, ```passcard_info_view```, ```storage_information_view``` by [@IlyaShirko](https://github.com/ilyashirko/)
+`active_passcards_view`, `passcard_info_view`, `storage_information_view` by [@IlyaShirko](https://github.com/ilyashirko/)
 
 # SECURITY CONTROL PANEL
 Site was made for the security officers to control security access cards of company employees which visit secret storage.  
@@ -15,13 +15,10 @@ $ pip3 install -r requirements.txt
 ```  
 create `.env` file and input there your database parameters and debug-mode status (true if you need debug, false if not)
 ```
-DEFAULT_DATABASE_ENGINE=####.####.#######.########
-DEFAULT_DATABASE_HOST=your.data.base
-DEFAULT_DATABASE_PORT=2342
-DEFAULT_DATABASE_NAME=name
-DEFAULT_DATABASE_USER=user
-DEFAULT_DATABASE_PASSWORD=password
-DEBUG=TRUE
+export DEBUG=False
+export DATABASE_URL=ENGINE://USER:PASSWORD@HOST:PORT/NAME (for postgresql)
+export SECRET_KEY=YOUR_SECRET_KEY
+export ALLOWED_HOSTS=['host1', 'host2'...]
 ```
 
 Then you can start local server from root directory via:  
